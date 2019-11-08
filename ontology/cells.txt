@@ -1,0 +1,700 @@
+:cell00 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :wall ;
+	 :hasSouth :cell10;
+	 :hasWest :wall ;
+	 :hasEst :cell01.
+
+:cell01 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :wall ;
+	 :hasSouth :cell11;
+	 :hasWest :cell00;
+	 :hasEst :cell02.
+
+:cell02 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :wall ;
+	 :hasSouth :cell12;
+	 :hasWest :cell01;
+	 :hasEst :cell03.
+
+:cell03 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :wall ;
+	 :hasSouth :cell13;
+	 :hasWest :cell02;
+	 :hasEst :cell04.
+
+:cell04 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :wall ;
+	 :hasSouth :cell14;
+	 :hasWest :cell03;
+	 :hasEst :cell05.
+
+:cell05 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :wall ;
+	 :hasSouth :cell15;
+	 :hasWest :cell04;
+	 :hasEst :cell06.
+
+:cell06 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :wall ;
+	 :hasSouth :cell16;
+	 :hasWest :cell05;
+	 :hasEst :cell07.
+
+:cell07 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :wall ;
+	 :hasSouth :cell17;
+	 :hasWest :cell06;
+	 :hasEst :cell08.
+
+:cell08 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :wall ;
+	 :hasSouth :cell18;
+	 :hasWest :cell07;
+	 :hasEst :cell09.
+
+:cell09 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :wall ;
+	 :hasSouth :cell19;
+	 :hasWest :cell08;
+	 :hasEst :wall .
+
+:cell10 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell00;
+	 :hasSouth :cell20;
+	 :hasWest :wall ;
+	 :hasEst :cell11.
+
+:cell11 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell01;
+	 :hasSouth :cell21;
+	 :hasWest :cell10;
+	 :hasEst :cell12.
+
+:cell12 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell02;
+	 :hasSouth :cell22;
+	 :hasWest :cell11;
+	 :hasEst :cell13.
+
+:cell13 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell03;
+	 :hasSouth :cell23;
+	 :hasWest :cell12;
+	 :hasEst :cell14.
+
+:cell14 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell04;
+	 :hasSouth :cell24;
+	 :hasWest :cell13;
+	 :hasEst :cell15.
+
+:cell15 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell05;
+	 :hasSouth :cell25;
+	 :hasWest :cell14;
+	 :hasEst :cell16.
+
+:cell16 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell06;
+	 :hasSouth :cell26;
+	 :hasWest :cell15;
+	 :hasEst :cell17.
+
+:cell17 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell07;
+	 :hasSouth :cell27;
+	 :hasWest :cell16;
+	 :hasEst :cell18.
+
+:cell18 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell08;
+	 :hasSouth :cell28;
+	 :hasWest :cell17;
+	 :hasEst :cell19.
+
+:cell19 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell09;
+	 :hasSouth :cell29;
+	 :hasWest :cell18;
+	 :hasEst :wall .
+
+:cell20 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell10;
+	 :hasSouth :cell30;
+	 :hasWest :wall ;
+	 :hasEst :cell21.
+
+:cell21 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell11;
+	 :hasSouth :cell31;
+	 :hasWest :cell20;
+	 :hasEst :cell22.
+
+:cell22 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell12;
+	 :hasSouth :cell32;
+	 :hasWest :cell21;
+	 :hasEst :cell23.
+
+:cell23 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell13;
+	 :hasSouth :cell33;
+	 :hasWest :cell22;
+	 :hasEst :cell24.
+
+:cell24 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell14;
+	 :hasSouth :cell34;
+	 :hasWest :cell23;
+	 :hasEst :cell25.
+
+:cell25 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell15;
+	 :hasSouth :cell35;
+	 :hasWest :cell24;
+	 :hasEst :cell26.
+
+:cell26 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell16;
+	 :hasSouth :cell36;
+	 :hasWest :cell25;
+	 :hasEst :cell27.
+
+:cell27 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell17;
+	 :hasSouth :cell37;
+	 :hasWest :cell26;
+	 :hasEst :cell28.
+
+:cell28 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell18;
+	 :hasSouth :cell38;
+	 :hasWest :cell27;
+	 :hasEst :cell29.
+
+:cell29 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell19;
+	 :hasSouth :cell39;
+	 :hasWest :cell28;
+	 :hasEst :wall .
+
+:cell30 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell20;
+	 :hasSouth :cell40;
+	 :hasWest :wall ;
+	 :hasEst :cell31.
+
+:cell31 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell21;
+	 :hasSouth :cell41;
+	 :hasWest :cell30;
+	 :hasEst :cell32.
+
+:cell32 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell22;
+	 :hasSouth :cell42;
+	 :hasWest :cell31;
+	 :hasEst :cell33.
+
+:cell33 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell23;
+	 :hasSouth :cell43;
+	 :hasWest :cell32;
+	 :hasEst :cell34.
+
+:cell34 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell24;
+	 :hasSouth :cell44;
+	 :hasWest :cell33;
+	 :hasEst :cell35.
+
+:cell35 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell25;
+	 :hasSouth :cell45;
+	 :hasWest :cell34;
+	 :hasEst :cell36.
+
+:cell36 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell26;
+	 :hasSouth :cell46;
+	 :hasWest :cell35;
+	 :hasEst :cell37.
+
+:cell37 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell27;
+	 :hasSouth :cell47;
+	 :hasWest :cell36;
+	 :hasEst :cell38.
+
+:cell38 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell28;
+	 :hasSouth :cell48;
+	 :hasWest :cell37;
+	 :hasEst :cell39.
+
+:cell39 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell29;
+	 :hasSouth :cell49;
+	 :hasWest :cell38;
+	 :hasEst :wall .
+
+:cell40 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell30;
+	 :hasSouth :cell50;
+	 :hasWest :wall ;
+	 :hasEst :cell41.
+
+:cell41 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell31;
+	 :hasSouth :cell51;
+	 :hasWest :cell40;
+	 :hasEst :cell42.
+
+:cell42 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell32;
+	 :hasSouth :cell52;
+	 :hasWest :cell41;
+	 :hasEst :cell43.
+
+:cell43 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell33;
+	 :hasSouth :cell53;
+	 :hasWest :cell42;
+	 :hasEst :cell44.
+
+:cell44 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell34;
+	 :hasSouth :cell54;
+	 :hasWest :cell43;
+	 :hasEst :cell45.
+
+:cell45 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell35;
+	 :hasSouth :cell55;
+	 :hasWest :cell44;
+	 :hasEst :cell46.
+
+:cell46 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell36;
+	 :hasSouth :cell56;
+	 :hasWest :cell45;
+	 :hasEst :cell47.
+
+:cell47 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell37;
+	 :hasSouth :cell57;
+	 :hasWest :cell46;
+	 :hasEst :cell48.
+
+:cell48 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell38;
+	 :hasSouth :cell58;
+	 :hasWest :cell47;
+	 :hasEst :cell49.
+
+:cell49 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell39;
+	 :hasSouth :cell59;
+	 :hasWest :cell48;
+	 :hasEst :wall .
+
+:cell50 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell40;
+	 :hasSouth :cell60;
+	 :hasWest :wall ;
+	 :hasEst :cell51.
+
+:cell51 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell41;
+	 :hasSouth :cell61;
+	 :hasWest :cell50;
+	 :hasEst :cell52.
+
+:cell52 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell42;
+	 :hasSouth :cell62;
+	 :hasWest :cell51;
+	 :hasEst :cell53.
+
+:cell53 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell43;
+	 :hasSouth :cell63;
+	 :hasWest :cell52;
+	 :hasEst :cell54.
+
+:cell54 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell44;
+	 :hasSouth :cell64;
+	 :hasWest :cell53;
+	 :hasEst :cell55.
+
+:cell55 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell45;
+	 :hasSouth :cell65;
+	 :hasWest :cell54;
+	 :hasEst :cell56.
+
+:cell56 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell46;
+	 :hasSouth :cell66;
+	 :hasWest :cell55;
+	 :hasEst :cell57.
+
+:cell57 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell47;
+	 :hasSouth :cell67;
+	 :hasWest :cell56;
+	 :hasEst :cell58.
+
+:cell58 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell48;
+	 :hasSouth :cell68;
+	 :hasWest :cell57;
+	 :hasEst :cell59.
+
+:cell59 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell49;
+	 :hasSouth :cell69;
+	 :hasWest :cell58;
+	 :hasEst :wall .
+
+:cell60 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell50;
+	 :hasSouth :cell70;
+	 :hasWest :wall ;
+	 :hasEst :cell61.
+
+:cell61 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell51;
+	 :hasSouth :cell71;
+	 :hasWest :cell60;
+	 :hasEst :cell62.
+
+:cell62 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell52;
+	 :hasSouth :cell72;
+	 :hasWest :cell61;
+	 :hasEst :cell63.
+
+:cell63 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell53;
+	 :hasSouth :cell73;
+	 :hasWest :cell62;
+	 :hasEst :cell64.
+
+:cell64 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell54;
+	 :hasSouth :cell74;
+	 :hasWest :cell63;
+	 :hasEst :cell65.
+
+:cell65 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell55;
+	 :hasSouth :cell75;
+	 :hasWest :cell64;
+	 :hasEst :cell66.
+
+:cell66 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell56;
+	 :hasSouth :cell76;
+	 :hasWest :cell65;
+	 :hasEst :cell67.
+
+:cell67 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell57;
+	 :hasSouth :cell77;
+	 :hasWest :cell66;
+	 :hasEst :cell68.
+
+:cell68 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell58;
+	 :hasSouth :cell78;
+	 :hasWest :cell67;
+	 :hasEst :cell69.
+
+:cell69 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell59;
+	 :hasSouth :cell79;
+	 :hasWest :cell68;
+	 :hasEst :wall .
+
+:cell70 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell60;
+	 :hasSouth :cell80;
+	 :hasWest :wall ;
+	 :hasEst :cell71.
+
+:cell71 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell61;
+	 :hasSouth :cell81;
+	 :hasWest :cell70;
+	 :hasEst :cell72.
+
+:cell72 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell62;
+	 :hasSouth :cell82;
+	 :hasWest :cell71;
+	 :hasEst :cell73.
+
+:cell73 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell63;
+	 :hasSouth :cell83;
+	 :hasWest :cell72;
+	 :hasEst :cell74.
+
+:cell74 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell64;
+	 :hasSouth :cell84;
+	 :hasWest :cell73;
+	 :hasEst :cell75.
+
+:cell75 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell65;
+	 :hasSouth :cell85;
+	 :hasWest :cell74;
+	 :hasEst :cell76.
+
+:cell76 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell66;
+	 :hasSouth :cell86;
+	 :hasWest :cell75;
+	 :hasEst :cell77.
+
+:cell77 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell67;
+	 :hasSouth :cell87;
+	 :hasWest :cell76;
+	 :hasEst :cell78.
+
+:cell78 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell68;
+	 :hasSouth :cell88;
+	 :hasWest :cell77;
+	 :hasEst :cell79.
+
+:cell79 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell69;
+	 :hasSouth :cell89;
+	 :hasWest :cell78;
+	 :hasEst :wall .
+
+:cell80 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell70;
+	 :hasSouth :cell90;
+	 :hasWest :wall ;
+	 :hasEst :cell81.
+
+:cell81 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell71;
+	 :hasSouth :cell91;
+	 :hasWest :cell80;
+	 :hasEst :cell82.
+
+:cell82 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell72;
+	 :hasSouth :cell92;
+	 :hasWest :cell81;
+	 :hasEst :cell83.
+
+:cell83 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell73;
+	 :hasSouth :cell93;
+	 :hasWest :cell82;
+	 :hasEst :cell84.
+
+:cell84 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell74;
+	 :hasSouth :cell94;
+	 :hasWest :cell83;
+	 :hasEst :cell85.
+
+:cell85 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell75;
+	 :hasSouth :cell95;
+	 :hasWest :cell84;
+	 :hasEst :cell86.
+
+:cell86 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell76;
+	 :hasSouth :cell96;
+	 :hasWest :cell85;
+	 :hasEst :cell87.
+
+:cell87 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell77;
+	 :hasSouth :cell97;
+	 :hasWest :cell86;
+	 :hasEst :cell88.
+
+:cell88 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell78;
+	 :hasSouth :cell98;
+	 :hasWest :cell87;
+	 :hasEst :cell89.
+
+:cell89 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell79;
+	 :hasSouth :cell99;
+	 :hasWest :cell88;
+	 :hasEst :wall .
+
+:cell90 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell80;
+	 :hasSouth :wall ;
+	 :hasWest :wall ;
+	 :hasEst :cell91.
+
+:cell91 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell81;
+	 :hasSouth :wall ;
+	 :hasWest :cell90;
+	 :hasEst :cell92.
+
+:cell92 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell82;
+	 :hasSouth :wall ;
+	 :hasWest :cell91;
+	 :hasEst :cell93.
+
+:cell93 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell83;
+	 :hasSouth :wall ;
+	 :hasWest :cell92;
+	 :hasEst :cell94.
+
+:cell94 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell84;
+	 :hasSouth :wall ;
+	 :hasWest :cell93;
+	 :hasEst :cell95.
+
+:cell95 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell85;
+	 :hasSouth :wall ;
+	 :hasWest :cell94;
+	 :hasEst :cell96.
+
+:cell96 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell86;
+	 :hasSouth :wall ;
+	 :hasWest :cell95;
+	 :hasEst :cell97.
+
+:cell97 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell87;
+	 :hasSouth :wall ;
+	 :hasWest :cell96;
+	 :hasEst :cell98.
+
+:cell98 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell88;
+	 :hasSouth :wall ;
+	 :hasWest :cell97;
+	 :hasEst :cell99.
+
+:cell99 rdf:type owl:NamedIndividual , 
+	 	 :Cell ;
+	 :hasNorth :cell89;
+	 :hasSouth :wall ;
+	 :hasWest :cell98;
+	 :hasEst :wall .
+
