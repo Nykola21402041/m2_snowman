@@ -1,0 +1,11 @@
+{
+  "game" : {
+    "size" : 10,
+    "boardItem" : {
+      "PLAYER": "player",
+      "SNOWBALL_SMALL": "snowball_small",
+      "SNOWBALL_MEDIUM": "snowball_medium",
+      "SNOWBALL_BIG": "snowball_big"
+    }
+  }
+}
