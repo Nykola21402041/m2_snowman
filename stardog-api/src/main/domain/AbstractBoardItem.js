@@ -1,5 +1,3 @@
-const snowman = require('../../../../snowman');
-
 class AbstractBoardItem {
     constructor(x, y) {
         if (this.constructor === AbstractBoardItem) {
@@ -22,14 +20,6 @@ class AbstractBoardItem {
         return this._y;
     }
 
-    get type() {
-        return this._type;
-    }
-
-    get position(){
-        return [this.x, this.y];
-    }
-
     set x(x) {
         throw new Error('Not implemented set x');
     }
@@ -38,9 +28,34 @@ class AbstractBoardItem {
         throw new Error('Not implemented set y');
     }
 
+    get type() {
+        return this._type;
+    }
+
+    get position() {
+        return [this._x, this._y];
+    }
+
+    moveUp() {
+        this._x -= 1;
+    }
+
+    moveDown() {
+        this._x += 1;
+    }
+
+    moveLeft() {
+        this._y -= 1;
+    }
+
+    moveRight() {
+        this._y += 1;
+    }
+
     toString() {
-        return `${AbstractBoardItem.getType()} x: ${this.x} y: ${this.y}`
+        return `${this.constructor.getType()} - x: ${this._x}  - y: ${this._y}`;
     }
 
 }
+
 module.exports = AbstractBoardItem;

@@ -2,10 +2,26 @@
   "game" : {
     "size" : 10,
     "boardItem" : {
-      "PLAYER": "player",
-      "SNOWBALL_SMALL": "snowball_small",
-      "SNOWBALL_MEDIUM": "snowball_medium",
-      "SNOWBALL_BIG": "snowball_big"
+      "FREECELL": {
+        "type": "free_cell",
+        "int": 0
+      },
+      "PLAYER": {
+        "type": "player",
+        "int": 1
+      },
+      "SNOWBALL_SMALL": {
+        "type": "snowball_small",
+        "int": 2
+      },
+      "SNOWBALL_MEDIUM": {
+        "type": "snowball_medium",
+        "int": 3
+      },
+      "SNOWBALL_BIG": {
+        "type": "snowball_big",
+        "int": 4
+      }
     }
   }
 }
