@@ -1,0 +1,52 @@
+const { Connection, query } = require('stardog');
+
+const d3 = require('d3');
+
+// Web
+
+const express = require('express');
+const app = express();
+
+app.get('/', function (req, res) {
+	res.send('hello world');
+});
+
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!')
+})
+
+// Stardog 
+
+const conn = new Connection({
+	username: 'admin',
+	password: 'admin',
+	endpoint: 'http://localhost:5820',
+});
+
+function handle(d) {
+	const input = d.map(d => {return  {"id": d.c.value, "concept": d.p.value}});
+	const data = d3.nest()
+		.key(d => {return d.id})
+		.rollup(v => {return v.map(d => {return d.concept})})
+		.map(input);
+	
+	return data;
+}
+
+
+
+
+query.execute(conn, 'snowman',
+	'prefix owl: <http://www.semanticweb.org/21402041/ontologies/2019/9/untitled-ontology-9#> select ?cell where {?cell rdf:type owl:CellNorthPlayer}',
+	'application/sparql-results+json', {
+	//limit :3,
+	offset:0,
+	reasoning: true	
+	}).then((body) => {
+		console.log(body.body.results.bindings)
+		const data = handle(body.body.results.bindings);
+		console.log(data);
+	
+	}).catch( (e) => {
+		console.log(e);
+	});
