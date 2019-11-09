@@ -1,0 +1,16 @@
+div {
+    width: 50px;
+    height: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.56);
+    border-radius: 2px;
+    background: repeating-radial-gradient(
+            circle,
+            #e0eff9,
+            #e0eff9 5px,
+            #e5f5ff 5px,
+            #e5f5ff 10px
+    );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
