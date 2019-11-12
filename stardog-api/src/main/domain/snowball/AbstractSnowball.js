@@ -1,7 +1,7 @@
 const snowman = require('../../../../../snowman');
-const BoardItem = require('../AbstractBoardItem');
+const AbstractBoardItem = require('../AbstractBoardItem');
 
-class AbstractSnowball extends BoardItem {
+class AbstractSnowball extends AbstractBoardItem {
 
     get x() {
         return super.x;

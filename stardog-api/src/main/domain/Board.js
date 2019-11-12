@@ -7,23 +7,21 @@ const {getRandomInt} = require("../helpers");
 
 class Board {
 
-    constructor(boardSize){
+    constructor(boardSize, player){
         this.boardItems = new Map();
         this.boardSize = boardSize;
 
-        // Generate Player
-        let position = this.getRandomFreePosition(this.listNotFreePosition);
-        this.boardItems[snowman.game.boardItem.PLAYER.type] = new Player(position[0], position[1]);
+        this.boardItems[snowman.game.boardItem.PLAYER.type] = player;
 
         // Generate 3 differents sized snowball
-        position = this.getRandomFreePosition(this.listNotFreePosition);
-        this.boardItems[snowman.game.boardItem.SNOWBALL_SMALL.type] = new SmallSnowball(position[0], position[1]);
+        //position = this.getRandomFreePosition(this.listNotFreePosition);
+        //this.boardItems[snowman.game.boardItem.SNOWBALL_SMALL.type] = new SmallSnowball(position[0], position[1]);
 
-        position = this.getRandomFreePosition(this.listNotFreePosition);
-        this.boardItems[snowman.game.boardItem.SNOWBALL_MEDIUM.type] = new MediumSnowball(position[0], position[1]);
+        //position = this.getRandomFreePosition(this.listNotFreePosition);
+        //this.boardItems[snowman.game.boardItem.SNOWBALL_MEDIUM.type] = new MediumSnowball(position[0], position[1]);
 
-        position = this.getRandomFreePosition(this.listNotFreePosition);
-        this.boardItems[snowman.game.boardItem.SNOWBALL_BIG.type] = new BigSnowball(position[0], position[1]);
+        //position = this.getRandomFreePosition(this.listNotFreePosition);
+        //this.boardItems[snowman.game.boardItem.SNOWBALL_BIG.type] = new BigSnowball(position[0], position[1]);
 
     }
 
@@ -78,9 +76,9 @@ class Board {
             array[i] = new Array(this.boardSize).fill(snowman.game.boardItem.FREECELL.int);
         }
         array[this.player.x][this.player.y] = snowman.game.boardItem.PLAYER.int;
-        array[this.smallSnowball.x][this.smallSnowball.y] = snowman.game.boardItem.SNOWBALL_SMALL.int;
-        array[this.mediumSnowball.x][this.mediumSnowball.y] = snowman.game.boardItem.SNOWBALL_MEDIUM.int;
-        array[this.bigSnowball.x][this.bigSnowball.y] = snowman.game.boardItem.SNOWBALL_BIG.int;
+        //array[this.smallSnowball.x][this.smallSnowball.y] = snowman.game.boardItem.SNOWBALL_SMALL.int;
+        //array[this.mediumSnowball.x][this.mediumSnowball.y] = snowman.game.boardItem.SNOWBALL_MEDIUM.int;
+        //array[this.bigSnowball.x][this.bigSnowball.y] = snowman.game.boardItem.SNOWBALL_BIG.int;
         return array;
     }
 }

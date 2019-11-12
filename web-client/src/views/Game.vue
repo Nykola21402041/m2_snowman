@@ -10,25 +10,25 @@
         <v-row>
             <v-col cols="12">
                 <div class="centerBoard">
-                    <v-btn v-on:click="newGame">New Game</v-btn>
+                    <v-btn v-on:click="getGame">New Game</v-btn>
                 </div>
             </v-col>
         </v-row>
-        <label>
-            <input v-on:keyup="moveUp"/>
-        </label>
-        <label>
-            <input v-on:keyup.up="moveUp"/>
-        </label>
-        <label>
-            <input v-on:keyup.down="moveDown"/>
-        </label>
-        <label>
-            <input v-on:keyup.left="moveLeft"/>
-        </label>
-        <label>
-            <input v-on:keyup.right="moveRight"/>
-        </label>
+<!--        <label>-->
+<!--            <input v-on:keyup="moveUp"/>-->
+<!--        </label>-->
+<!--        <label>-->
+<!--            <input v-on:keyup.up="moveUp"/>-->
+<!--        </label>-->
+<!--        <label>-->
+<!--            <input v-on:keyup.down="moveDown"/>-->
+<!--        </label>-->
+<!--        <label>-->
+<!--            <input v-on:keyup.left="moveLeft"/>-->
+<!--        </label>-->
+<!--        <label>-->
+<!--            <input v-on:keyup.right="moveRight"/>-->
+<!--        </label>-->
     </v-container>
 </template>
 
@@ -63,9 +63,9 @@
                     .then(data => { return data});
             }
             ,
-            newGame: async function() {
-                const res = await this.graphQLQuery('newGame');
-                this.board = res.data.newGame;
+            getGame: async function() {
+                const res = await this.graphQLQuery('getGame');
+                this.board = res.data.getGame;
                 this.allowPlay = true;
             },
             move: async function (move) {
@@ -103,7 +103,7 @@
             }
         },
         mounted() {
-            this.newGame();
+            this.getGame();
             window.addEventListener('keydown', (e)=> {
                 const key = e.which || e.keyCode;
                 if (key === 38) {

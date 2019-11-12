@@ -4,7 +4,11 @@ const {buildSchema} = require('graphql');
 const cors = require('cors');
 const snowman = require('../../../snowman');
 const Board = require('./domain/Board');
+const Player = require('./domain/player/Player');
 
+const SnowmanDAO = require('./SnowmanDAO');
+
+let snowmanDao = new SnowmanDAO();
 // Initialize a board game
 let board = new Board(snowman.game.size);
 
@@ -12,6 +16,7 @@ let board = new Board(snowman.game.size);
 const schema = buildSchema(`
   type Query {
     newGame: [[Int]],
+    getGame: [[Int]],
     moveUp: [[Int]],
     moveDown: [[Int]],
     moveLeft: [[Int]],
@@ -22,23 +27,40 @@ const schema = buildSchema(`
 // The root provides a resolver function for each API endpoint
 const root = {
     newGame: () => {
-        board = new Board(snowman.game.size);
+        return null;
+    },
+    getGame: async () => {
+        const position = await snowmanDao.getPlayerPosition();
+        const player = new Player(position[0], position[1]);
+        board = new Board(snowman.game.size, player);
         return board.toArray();
     },
-    moveUp: () => {
-        board.player.moveUp();
+    moveUp: async () => {
+        if(await snowmanDao.canMove(SnowmanDAO.UP)) {
+            await snowmanDao.move(SnowmanDAO.UP);
+            board.player.moveUp();
+        }
         return board.toArray();
     },
-    moveDown: () => {
-        board.player.moveDown();
+    moveDown: async () => {
+        if(await snowmanDao.canMove(SnowmanDAO.DOWN)) {
+            await snowmanDao.move(SnowmanDAO.DOWN);
+            board.player.moveDown();
+        }
         return board.toArray();
     },
-    moveLeft: () => {
-        board.player.moveLeft();
+    moveLeft: async () => {
+        if(await snowmanDao.canMove(SnowmanDAO.LEFT)) {
+            await snowmanDao.move(SnowmanDAO.LEFT);
+            board.player.moveLeft();
+        }
         return board.toArray();
     },
-    moveRight: () => {
-        board.player.moveRight();
+    moveRight: async () => {
+        if(await snowmanDao.canMove(SnowmanDAO.RIGHT)) {
+            await snowmanDao.move(SnowmanDAO.RIGHT);
+            board.player.moveRight();
+        }
         return board.toArray();
     },
 

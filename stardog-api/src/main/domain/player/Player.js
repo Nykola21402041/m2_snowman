@@ -1,7 +1,7 @@
 const snowman = require('../../../../../snowman');
-const BoardItem = require('../AbstractBoardItem');
+const AbstractBoardItem = require('../AbstractBoardItem');
 
-class Player extends BoardItem {
+class Player extends AbstractBoardItem {
 
     static getType() {
         return snowman.game.boardItem.PLAYER.type;

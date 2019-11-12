@@ -3,8 +3,8 @@ class AbstractBoardItem {
         if (this.constructor === AbstractBoardItem) {
             throw new TypeError('Abstract class "AbstractBoardItem" cannot be instantiated directly');
         }
-        this._x = x;
-        this._y = y;
+        this._x = Number(x);
+        this._y = Number(y);
         this._type = this.constructor.getType();
     }
 
@@ -38,18 +38,22 @@ class AbstractBoardItem {
 
     moveUp() {
         this._x -= 1;
+        console.log(this.toString());
     }
 
     moveDown() {
         this._x += 1;
+        console.log(this.toString());
     }
 
     moveLeft() {
         this._y -= 1;
+        console.log(this.toString());
     }
 
     moveRight() {
         this._y += 1;
+        console.log(this.toString());
     }
 
     toString() {
