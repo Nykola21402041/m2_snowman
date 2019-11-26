@@ -45,6 +45,12 @@ class SnowmanDAO {
         return [position[0], position[1]];
     }
 
+    async getLittleBoulePosition() {
+        let response = await this.queryStardog('SELECT ?cell WHERE {?cell rdf:type :CellLittleBoule}');
+        let position = response.body.results.bindings[0].cell.value.split("#cell")[1];
+        return [position[0], position[1]];
+    }
+
     queryStardog(queryString) {
         return query.execute(this.db, this.dbname, queryString,
             'application/sparql-results+json', {

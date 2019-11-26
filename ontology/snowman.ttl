@@ -48,54 +48,126 @@
 
 ###  http://www.semanticweb.org/21402041/ontologies/2019/9/snowman-hoffmann#CellFreeEstPlayer
 :CellFreeEstPlayer rdf:type owl:Class ;
-                   owl:equivalentClass [ owl:intersectionOf ( :CellFree
-                                                              [ rdf:type owl:Restriction ;
-                                                                owl:onProperty :hasEst ;
-                                                                owl:someValuesFrom :CellPlayer
-                                                              ]
-                                                            ) ;
-                                         rdf:type owl:Class
+                   owl:equivalentClass [ rdf:type owl:Class ;
+                                         owl:unionOf ( [ owl:intersectionOf ( :CellFree
+                                                                              [ rdf:type owl:Restriction ;
+                                                                                owl:onProperty :hasWest ;
+                                                                                owl:someValuesFrom :CellPlayer
+                                                                              ]
+                                                                            ) ;
+                                                         rdf:type owl:Class
+                                                       ]
+                                                       [ owl:intersectionOf ( :CellLittleBoule
+                                                                              [ rdf:type owl:Restriction ;
+                                                                                owl:onProperty :hasEst ;
+                                                                                owl:someValuesFrom :CellFree
+                                                                              ]
+                                                                              [ rdf:type owl:Restriction ;
+                                                                                owl:onProperty :hasWest ;
+                                                                                owl:someValuesFrom :CellPlayer
+                                                                              ]
+                                                                            ) ;
+                                                         rdf:type owl:Class
+                                                       ]
+                                                     )
                                        ] ;
                    rdfs:subClassOf :CellFree .
 
 
 ###  http://www.semanticweb.org/21402041/ontologies/2019/9/snowman-hoffmann#CellFreeNorthPlayer
 :CellFreeNorthPlayer rdf:type owl:Class ;
-                     owl:equivalentClass [ owl:intersectionOf ( :CellFree
-                                                                [ rdf:type owl:Restriction ;
-                                                                  owl:onProperty :hasSouth ;
-                                                                  owl:someValuesFrom :CellPlayer
-                                                                ]
-                                                              ) ;
-                                           rdf:type owl:Class
+                     owl:equivalentClass [ rdf:type owl:Class ;
+                                           owl:unionOf ( [ owl:intersectionOf ( :CellFree
+                                                                                [ rdf:type owl:Restriction ;
+                                                                                  owl:onProperty :hasSouth ;
+                                                                                  owl:someValuesFrom :CellPlayer
+                                                                                ]
+                                                                              ) ;
+                                                           rdf:type owl:Class
+                                                         ]
+                                                         [ owl:intersectionOf ( :CellLittleBoule
+                                                                                [ rdf:type owl:Restriction ;
+                                                                                  owl:onProperty :hasNorth ;
+                                                                                  owl:someValuesFrom :CellFree
+                                                                                ]
+                                                                                [ rdf:type owl:Restriction ;
+                                                                                  owl:onProperty :hasSouth ;
+                                                                                  owl:someValuesFrom :CellPlayer
+                                                                                ]
+                                                                              ) ;
+                                                           rdf:type owl:Class
+                                                         ]
+                                                       )
                                          ] ;
                      rdfs:subClassOf :CellFree .
 
 
 ###  http://www.semanticweb.org/21402041/ontologies/2019/9/snowman-hoffmann#CellFreeSouthPlayer
 :CellFreeSouthPlayer rdf:type owl:Class ;
-                     owl:equivalentClass [ owl:intersectionOf ( :CellFree
-                                                                [ rdf:type owl:Restriction ;
-                                                                  owl:onProperty :hasNorth ;
-                                                                  owl:someValuesFrom :CellPlayer
-                                                                ]
-                                                              ) ;
-                                           rdf:type owl:Class
+                     owl:equivalentClass [ rdf:type owl:Class ;
+                                           owl:unionOf ( [ owl:intersectionOf ( :CellFree
+                                                                                [ rdf:type owl:Restriction ;
+                                                                                  owl:onProperty :hasNorth ;
+                                                                                  owl:someValuesFrom :CellPlayer
+                                                                                ]
+                                                                              ) ;
+                                                           rdf:type owl:Class
+                                                         ]
+                                                         [ owl:intersectionOf ( :CellLittleBoule
+                                                                                [ rdf:type owl:Restriction ;
+                                                                                  owl:onProperty :hasNorth ;
+                                                                                  owl:someValuesFrom :CellPlayer
+                                                                                ]
+                                                                                [ rdf:type owl:Restriction ;
+                                                                                  owl:onProperty :hasSouth ;
+                                                                                  owl:someValuesFrom :CellFree
+                                                                                ]
+                                                                              ) ;
+                                                           rdf:type owl:Class
+                                                         ]
+                                                       )
                                          ] ;
                      rdfs:subClassOf :CellFree .
 
 
 ###  http://www.semanticweb.org/21402041/ontologies/2019/9/snowman-hoffmann#CellFreeWestPlayer
 :CellFreeWestPlayer rdf:type owl:Class ;
-                    owl:equivalentClass [ owl:intersectionOf ( :CellFree
-                                                               [ rdf:type owl:Restriction ;
-                                                                 owl:onProperty :hasWest ;
-                                                                 owl:someValuesFrom :CellPlayer
-                                                               ]
-                                                             ) ;
-                                          rdf:type owl:Class
+                    owl:equivalentClass [ rdf:type owl:Class ;
+                                          owl:unionOf ( [ owl:intersectionOf ( :CellFree
+                                                                               [ rdf:type owl:Restriction ;
+                                                                                 owl:onProperty :hasEst ;
+                                                                                 owl:someValuesFrom :CellPlayer
+                                                                               ]
+                                                                             ) ;
+                                                          rdf:type owl:Class
+                                                        ]
+                                                        [ owl:intersectionOf ( :CellLittleBoule
+                                                                               [ rdf:type owl:Restriction ;
+                                                                                 owl:onProperty :hasEst ;
+                                                                                 owl:someValuesFrom :CellPlayer
+                                                                               ]
+                                                                               [ rdf:type owl:Restriction ;
+                                                                                 owl:onProperty :hasWest ;
+                                                                                 owl:someValuesFrom :CellFree
+                                                                               ]
+                                                                             ) ;
+                                                          rdf:type owl:Class
+                                                        ]
+                                                      )
                                         ] ;
                     rdfs:subClassOf :CellFree .
+
+
+###  http://www.semanticweb.org/21402041/ontologies/2019/9/snowman-hoffmann#CellLittleBoule
+:CellLittleBoule rdf:type owl:Class ;
+                 owl:equivalentClass [ owl:intersectionOf ( :CellFree
+                                                            [ rdf:type owl:Restriction ;
+                                                              owl:onProperty :hasOnIt ;
+                                                              owl:hasValue :littleboule
+                                                            ]
+                                                          ) ;
+                                       rdf:type owl:Class
+                                     ] .
 
 
 ###  http://www.semanticweb.org/21402041/ontologies/2019/9/snowman-hoffmann#CellNonFree
@@ -111,8 +183,11 @@
                                                        ]
                                                      ) ;
                                   rdf:type owl:Class
-                                ] ;
-            rdfs:subClassOf :CellFree .
+                                ] .
+
+
+###  http://www.semanticweb.org/21402041/ontologies/2019/9/snowman-hoffmann#LittleBoule
+:LittleBoule rdf:type owl:Class .
 
 
 ###  http://www.semanticweb.org/21402041/ontologies/2019/9/snowman-hoffmann#Player
@@ -1021,6 +1096,12 @@
         :hasNorth :cell89 ;
         :hasSouth :wall ;
         :hasWest :cell98 .
+
+
+###  http://www.semanticweb.org/21402041/ontologies/2019/9/snowman-hoffmann#littleboule
+:littleboule rdf:type owl:NamedIndividual ,
+                      :LittleBoule ;
+             :locatedAt :cell66 .
 
 
 ###  http://www.semanticweb.org/21402041/ontologies/2019/9/snowman-hoffmann#player

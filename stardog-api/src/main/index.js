@@ -5,6 +5,7 @@ const cors = require('cors');
 const snowman = require('../../../snowman');
 const Board = require('./domain/Board');
 const Player = require('./domain/player/Player');
+const SmallSnowball = require('./domain/snowball/SmallSnowball');
 
 const SnowmanDAO = require('./SnowmanDAO');
 
@@ -30,9 +31,11 @@ const root = {
         return null;
     },
     getGame: async () => {
-        const position = await snowmanDao.getPlayerPosition();
+        let position = await snowmanDao.getPlayerPosition();
         const player = new Player(position[0], position[1]);
-        board = new Board(snowman.game.size, player);
+        position = await snowmanDao.getLittleBoulePosition();
+        const smallSnowball = new SmallSnowball(position[0], position[1]);
+        board = new Board(snowman.game.size, player, smallSnowball);
         return board.toArray();
     },
     moveUp: async () => {

@@ -7,11 +7,12 @@ const {getRandomInt} = require("../helpers");
 
 class Board {
 
-    constructor(boardSize, player){
+    constructor(boardSize, player, smallSnowball){
         this.boardItems = new Map();
         this.boardSize = boardSize;
 
         this.boardItems[snowman.game.boardItem.PLAYER.type] = player;
+        this.boardItems[snowman.game.boardItem.SNOWBALL_SMALL.type] = smallSnowball;
 
         // Generate 3 differents sized snowball
         //position = this.getRandomFreePosition(this.listNotFreePosition);
@@ -76,7 +77,7 @@ class Board {
             array[i] = new Array(this.boardSize).fill(snowman.game.boardItem.FREECELL.int);
         }
         array[this.player.x][this.player.y] = snowman.game.boardItem.PLAYER.int;
-        //array[this.smallSnowball.x][this.smallSnowball.y] = snowman.game.boardItem.SNOWBALL_SMALL.int;
+        array[this.smallSnowball.x][this.smallSnowball.y] = snowman.game.boardItem.SNOWBALL_SMALL.int;
         //array[this.mediumSnowball.x][this.mediumSnowball.y] = snowman.game.boardItem.SNOWBALL_MEDIUM.int;
         //array[this.bigSnowball.x][this.bigSnowball.y] = snowman.game.boardItem.SNOWBALL_BIG.int;
         return array;
