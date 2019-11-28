@@ -14,21 +14,6 @@
                 </div>
             </v-col>
         </v-row>
-<!--        <label>-->
-<!--            <input v-on:keyup="moveUp"/>-->
-<!--        </label>-->
-<!--        <label>-->
-<!--            <input v-on:keyup.up="moveUp"/>-->
-<!--        </label>-->
-<!--        <label>-->
-<!--            <input v-on:keyup.down="moveDown"/>-->
-<!--        </label>-->
-<!--        <label>-->
-<!--            <input v-on:keyup.left="moveLeft"/>-->
-<!--        </label>-->
-<!--        <label>-->
-<!--            <input v-on:keyup.right="moveRight"/>-->
-<!--        </label>-->
     </v-container>
 </template>
 
@@ -50,73 +35,51 @@
             Board
         },
         methods: {
-            graphQLQuery: function(query) {
+            graphQLQuery: function(query, args) {
                 return fetch('http://localhost:4000/graphql', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json',
                     },
-                    body: JSON.stringify({query: "{" + query + "}"})
+                    body: JSON.stringify({
+                        query: query,
+                        variables: args
+                    })
                 })
                     .then(r => r.json())
                     .then(data => { return data});
             }
             ,
             getGame: async function() {
-                const res = await this.graphQLQuery('getGame');
+                const res = await this.graphQLQuery('query { getGame }', {});
                 this.board = res.data.getGame;
                 this.allowPlay = true;
             },
-            move: async function (move) {
+            move: async function (direction) {
                 this.allowPlay = false;
-                const res = await this.graphQLQuery(move);
-                switch (move) {
-                    case 'moveUp':
-                        this.board = res.data.moveUp;
-                        break;
-                    case 'moveDown':
-                        this.board = res.data.moveDown;
-                        break;
-                    case 'moveLeft':
-                        this.board = res.data.moveLeft;
-                        break;
-                    case 'moveRight':
-                        this.board = res.data.moveRight;
-                        break;
-                    default:
-                        throw "Bad input";
-                }
+                const res = await this.graphQLQuery(`query Move($direction: String!) {
+                move(direction: $direction)
+                }`, `{"direction":"${direction}"}`);
+                this.board = res.data.move;
                 this.allowPlay = true;
             },
-            moveUp: async function() {
-                this.move('moveUp');
-            },
-            moveDown: async function() {
-                this.move('moveDown');
-            },
-            moveLeft: async function() {
-                this.move('moveLeft');
-            },
-            moveRight: async function() {
-                this.move('moveRight');
-            }
         },
         mounted() {
             this.getGame();
             window.addEventListener('keydown', (e)=> {
                 const key = e.which || e.keyCode;
                 if (key === 38) {
-                    this.moveUp();
+                    this.move('North');
                 }
                 if (key === 40) {
-                    this.moveDown();
+                    this.move('South');
                 }
                 if (key === 37) {
-                    this.moveLeft();
+                    this.move('West');
                 }
                 if (key === 39) {
-                    this.moveRight();
+                    this.move('East');
                 }
             });
         }

@@ -19,6 +19,8 @@ for x in range(10):
 
         f.write(":cell" + str(x) + str(y) + " rdf:type owl:NamedIndividual , \n")
         f.write("\t \t :Cell ;\n")
+        f.write("\t :x \"" + str(x) + "\"^^xsd:int ;\n")
+        f.write("\t :y \"" + str(y) + "\"^^xsd:int ;\n")
         # North
         if north_x != -1:
             f.write("\t :hasNorth :cell" + str(north_x) + str(north_y) + ";\n")
@@ -36,8 +38,8 @@ for x in range(10):
             f.write("\t :hasWest :wall ;\n")
         # Est
         if est_y != 10:
-            f.write("\t :hasEst :cell" + str(est_x) + str(est_y) + ".\n\n")
+            f.write("\t :hasEast :cell" + str(est_x) + str(est_y) + ".\n\n")
         else:
-            f.write("\t :hasEst :wall .\n\n")
+            f.write("\t :hasEast :wall .\n\n")
 
 f.close()

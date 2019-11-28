@@ -8,7 +8,7 @@ class SnowmanDAO {
     }
 
     static get RIGHT() {
-        return "Est";
+        return "East";
     }
 
     static get UP() {
@@ -17,6 +17,14 @@ class SnowmanDAO {
 
     static get DOWN() {
         return "South";
+    }
+
+    static get CELL_TYPE_PLAYER(){
+        return "CellPlayer";
+    }
+
+    static get CELL_TYPE_FREE(){
+        return "Cell";
     }
 
     constructor() {
@@ -40,15 +48,14 @@ class SnowmanDAO {
     }
 
     async getPlayerPosition() {
-        let response = await this.queryStardog('SELECT ?cell WHERE {?cell rdf:type :CellPlayer}');
-        let position = response.body.results.bindings[0].cell.value.split("#cell")[1];
-        return [position[0], position[1]];
-    }
-
-    async getLittleBoulePosition() {
-        let response = await this.queryStardog('SELECT ?cell WHERE {?cell rdf:type :CellLittleBoule}');
-        let position = response.body.results.bindings[0].cell.value.split("#cell")[1];
-        return [position[0], position[1]];
+        let response = await this.queryStardog('SELECT ?x ?y WHERE {' +
+            '?cell rdf:type :CellPlayer .' +
+            '?cell :x ?x .' +
+            '?cell :y ?y .' +
+            '}');
+        const x = response.body.results.bindings[0].x.value;
+        const y = response.body.results.bindings[0].y.value;
+        return [Number(x), Number(y)];
     }
 
     queryStardog(queryString) {
@@ -60,26 +67,66 @@ class SnowmanDAO {
             .then((body) => {
                 return body;
             }).catch((e) => {
-            console.log(e);
-        });
+                console.log(e);
+            });
     }
 
-    async canMove(direction) {
-        const response = await this.queryStardog('ASK WHERE {?cell rdf:type :CellFree'+ direction +'Player}');
+    insertCell(x, y, type) {
+        const northItem = (x - 1 !== - 1) ? `cell${x - 1}${y}` : 'wall';
+        const southItem = (x + 1 !== 10) ? `cell${x + 1}${y}` : 'wall';
+        const westItem = (y - 1 !== - 1) ? `cell${x}${y - 1}` : 'wall';
+        const eastItem = (y + 1 !== 10) ? `cell${x}${y + 1}` : 'wall';
+        const query = `INSERT DATA {
+            :cell${x}${y} rdf:type :${type};
+                :hasNorth :${northItem};
+                :hasSouth :${southItem};
+                :hasWest :${westItem};
+                :hasEast :${eastItem};
+                :x "${x}"^^xsd:int ;
+                :y "${y}"^^xsd:int . }`;
+        return this.queryStardog(query);
+    }
+
+    deleteCell(x, y, type){
+        const query = `DELETE WHERE {
+            ?cell rdf:type :${type} ;
+                :x "${x}"^^xsd:int ;
+                :y "${y}"^^xsd:int . }`;
+        return this.queryStardog(query);
+    }
+
+    async isCellFree(direction) {
+        const response = await this.queryStardog('ASK WHERE {?cell rdf:type :CellFree' + direction + 'Player}');
         console.log("canMove to " + direction + " " + response.body.boolean);
         return response.body.boolean;
     }
 
-    async move(direction) {
-        const response = await this.queryStardog('' +
-            'DELETE { ?player :locatedAt ?cellPlayer . }' +
-            'INSERT { ?player :locatedAt ?newCell . }' +
-            'WHERE {' +
-            '   ?player rdf:type :Player .' +
-            '   ?cellPlayer rdf:type :CellPlayer .' +
-            '   ?cellPlayer :has'+ direction + ' ?newCell .' +
-            '}');
-        return response.body;
+    async movePlayer(direction) {
+        let playerPosition = await this.getPlayerPosition();
+        let x = playerPosition[0];
+        let y = playerPosition[1];
+        await this.deleteCell(x ,y, SnowmanDAO.CELL_TYPE_PLAYER);
+        await this.insertCell(x, y, SnowmanDAO.CELL_TYPE_FREE);
+        switch (direction) {
+            case SnowmanDAO.UP:
+                await this.deleteCell(x - 1, y, SnowmanDAO.CELL_TYPE_FREE);
+                await this.insertCell(x - 1, y, SnowmanDAO.CELL_TYPE_PLAYER);
+                break;
+            case SnowmanDAO.DOWN:
+                await this.deleteCell(x + 1, y, SnowmanDAO.CELL_TYPE_FREE);
+                await this.insertCell(x + 1, y, SnowmanDAO.CELL_TYPE_PLAYER);
+                break;
+            case SnowmanDAO.LEFT:
+                await this.deleteCell(x, y - 1, SnowmanDAO.CELL_TYPE_FREE);
+                await this.insertCell(x, y - 1, SnowmanDAO.CELL_TYPE_PLAYER);
+                break;
+            case SnowmanDAO.RIGHT:
+                await this.deleteCell(x, y + 1, SnowmanDAO.CELL_TYPE_FREE);
+                await this.insertCell(x, y + 1, SnowmanDAO.CELL_TYPE_PLAYER);
+                break;
+            default:
+                throw "Unexpected direction";
+        }
     }
 
 }

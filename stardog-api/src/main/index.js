@@ -16,56 +16,48 @@ let board = new Board(snowman.game.size);
 // Construct a schema, using GraphQL schema language
 const schema = buildSchema(`
   type Query {
-    newGame: [[Int]],
     getGame: [[Int]],
-    moveUp: [[Int]],
-    moveDown: [[Int]],
-    moveLeft: [[Int]],
-    moveRight: [[Int]]
+    move(direction:String!): [[Int]]
   }
 `);
 
 // The root provides a resolver function for each API endpoint
 const root = {
-    newGame: () => {
-        return null;
-    },
     getGame: async () => {
         let position = await snowmanDao.getPlayerPosition();
+        console.log(position);
         const player = new Player(position[0], position[1]);
-        position = await snowmanDao.getLittleBoulePosition();
-        const smallSnowball = new SmallSnowball(position[0], position[1]);
+        //position = await snowmanDao.getLittleBoulePosition();
+        const smallSnowball = new SmallSnowball(1, 1);
         board = new Board(snowman.game.size, player, smallSnowball);
         return board.toArray();
     },
-    moveUp: async () => {
-        if(await snowmanDao.canMove(SnowmanDAO.UP)) {
-            await snowmanDao.move(SnowmanDAO.UP);
-            board.player.moveUp();
+    move: async (req) => {
+        let directions = [SnowmanDAO.UP, SnowmanDAO.DOWN, SnowmanDAO.LEFT, SnowmanDAO.RIGHT];
+        if (directions.indexOf(req["direction"]) === -1){
+            throw "Unexpected direction";
+        }
+        console.log(req.direction);
+        if (await snowmanDao.isCellFree(req.direction)) {
+            await snowmanDao.movePlayer(req.direction);
+            switch (req.direction) {
+                case SnowmanDAO.UP:
+                    board.player.moveUp();
+                    break;
+                case SnowmanDAO.DOWN:
+                    board.player.moveDown();
+                    break;
+                case SnowmanDAO.RIGHT:
+                    board.player.moveRight();
+                    break;
+                case SnowmanDAO.LEFT:
+                    board.player.moveLeft();
+                    break;
+            }
+
         }
         return board.toArray();
-    },
-    moveDown: async () => {
-        if(await snowmanDao.canMove(SnowmanDAO.DOWN)) {
-            await snowmanDao.move(SnowmanDAO.DOWN);
-            board.player.moveDown();
-        }
-        return board.toArray();
-    },
-    moveLeft: async () => {
-        if(await snowmanDao.canMove(SnowmanDAO.LEFT)) {
-            await snowmanDao.move(SnowmanDAO.LEFT);
-            board.player.moveLeft();
-        }
-        return board.toArray();
-    },
-    moveRight: async () => {
-        if(await snowmanDao.canMove(SnowmanDAO.RIGHT)) {
-            await snowmanDao.move(SnowmanDAO.RIGHT);
-            board.player.moveRight();
-        }
-        return board.toArray();
-    },
+    }
 
 };
 
