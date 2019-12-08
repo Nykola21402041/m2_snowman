@@ -52,6 +52,16 @@
 #    Classes
 #################################################################
 
+###  http://www.semanticweb.org/21402041/ontologies/2019/9/snowman-hoffmann#BigMediumSnow
+:BigMediumSnow rdf:type owl:Class ;
+               rdfs:subClassOf :StackedSnow .
+
+
+###  http://www.semanticweb.org/21402041/ontologies/2019/9/snowman-hoffmann#BigSnow
+:BigSnow rdf:type owl:Class ;
+         rdfs:subClassOf :NotStackedSnow .
+
+
 ###  http://www.semanticweb.org/21402041/ontologies/2019/9/snowman-hoffmann#Cell
 :Cell rdf:type owl:Class ;
       owl:disjointWith :CellNonFree .
@@ -118,9 +128,210 @@
 :CellSnow rdf:type owl:Class .
 
 
+###  http://www.semanticweb.org/21402041/ontologies/2019/9/snowman-hoffmann#FullSnowman
+:FullSnowman rdf:type owl:Class ;
+             rdfs:subClassOf :StackedSnow .
+
+
 ###  http://www.semanticweb.org/21402041/ontologies/2019/9/snowman-hoffmann#LittleSnow
 :LittleSnow rdf:type owl:Class ;
-            rdfs:subClassOf :CellSnow .
+            rdfs:subClassOf :NotStackedSnow .
+
+
+###  http://www.semanticweb.org/21402041/ontologies/2019/9/snowman-hoffmann#LittleStackable
+:LittleStackable rdf:type owl:Class ;
+                 owl:equivalentClass [ owl:intersectionOf ( :LittleSnow
+                                                            [ rdf:type owl:Class ;
+                                                              owl:unionOf ( [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                                                     owl:onProperty :hasEast ;
+                                                                                                     owl:someValuesFrom :CellPlayer
+                                                                                                   ]
+                                                                                                   [ rdf:type owl:Restriction ;
+                                                                                                     owl:onProperty :hasWest ;
+                                                                                                     owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                          owl:unionOf ( :BigMediumSnow
+                                                                                                                                        :MediumSnow
+                                                                                                                                      )
+                                                                                                                        ]
+                                                                                                   ]
+                                                                                                 ) ;
+                                                                              rdf:type owl:Class
+                                                                            ]
+                                                                            [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                                                     owl:onProperty :hasEast ;
+                                                                                                     owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                          owl:unionOf ( :BigMediumSnow
+                                                                                                                                        :MediumSnow
+                                                                                                                                      )
+                                                                                                                        ]
+                                                                                                   ]
+                                                                                                   [ rdf:type owl:Restriction ;
+                                                                                                     owl:onProperty :hasWest ;
+                                                                                                     owl:someValuesFrom :CellPlayer
+                                                                                                   ]
+                                                                                                 ) ;
+                                                                              rdf:type owl:Class
+                                                                            ]
+                                                                            [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                                                     owl:onProperty :hasNorth ;
+                                                                                                     owl:someValuesFrom :CellPlayer
+                                                                                                   ]
+                                                                                                   [ rdf:type owl:Restriction ;
+                                                                                                     owl:onProperty :hasSouth ;
+                                                                                                     owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                          owl:unionOf ( :BigMediumSnow
+                                                                                                                                        :MediumSnow
+                                                                                                                                      )
+                                                                                                                        ]
+                                                                                                   ]
+                                                                                                 ) ;
+                                                                              rdf:type owl:Class
+                                                                            ]
+                                                                            [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                                                     owl:onProperty :hasNorth ;
+                                                                                                     owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                                                                          owl:unionOf ( :BigMediumSnow
+                                                                                                                                        :MediumSnow
+                                                                                                                                      )
+                                                                                                                        ]
+                                                                                                   ]
+                                                                                                   [ rdf:type owl:Restriction ;
+                                                                                                     owl:onProperty :hasSouth ;
+                                                                                                     owl:someValuesFrom :CellPlayer
+                                                                                                   ]
+                                                                                                 ) ;
+                                                                              rdf:type owl:Class
+                                                                            ]
+                                                                          )
+                                                            ]
+                                                          ) ;
+                                       rdf:type owl:Class
+                                     ] .
+
+
+###  http://www.semanticweb.org/21402041/ontologies/2019/9/snowman-hoffmann#MediumSnow
+:MediumSnow rdf:type owl:Class ;
+            rdfs:subClassOf :NotStackedSnow .
+
+
+###  http://www.semanticweb.org/21402041/ontologies/2019/9/snowman-hoffmann#MediumStackable
+:MediumStackable rdf:type owl:Class ;
+                 owl:equivalentClass [ owl:intersectionOf ( :MediumSnow
+                                                            [ rdf:type owl:Class ;
+                                                              owl:unionOf ( [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                                                     owl:onProperty :hasEast ;
+                                                                                                     owl:someValuesFrom :BigSnow
+                                                                                                   ]
+                                                                                                   [ rdf:type owl:Restriction ;
+                                                                                                     owl:onProperty :hasWest ;
+                                                                                                     owl:someValuesFrom :CellPlayer
+                                                                                                   ]
+                                                                                                 ) ;
+                                                                              rdf:type owl:Class
+                                                                            ]
+                                                                            [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                                                     owl:onProperty :hasEast ;
+                                                                                                     owl:someValuesFrom :CellPlayer
+                                                                                                   ]
+                                                                                                   [ rdf:type owl:Restriction ;
+                                                                                                     owl:onProperty :hasWest ;
+                                                                                                     owl:someValuesFrom :BigSnow
+                                                                                                   ]
+                                                                                                 ) ;
+                                                                              rdf:type owl:Class
+                                                                            ]
+                                                                            [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                                                     owl:onProperty :hasNorth ;
+                                                                                                     owl:someValuesFrom :BigSnow
+                                                                                                   ]
+                                                                                                   [ rdf:type owl:Restriction ;
+                                                                                                     owl:onProperty :hasSouth ;
+                                                                                                     owl:someValuesFrom :CellPlayer
+                                                                                                   ]
+                                                                                                 ) ;
+                                                                              rdf:type owl:Class
+                                                                            ]
+                                                                            [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                                                     owl:onProperty :hasNorth ;
+                                                                                                     owl:someValuesFrom :CellPlayer
+                                                                                                   ]
+                                                                                                   [ rdf:type owl:Restriction ;
+                                                                                                     owl:onProperty :hasSouth ;
+                                                                                                     owl:someValuesFrom :BigSnow
+                                                                                                   ]
+                                                                                                 ) ;
+                                                                              rdf:type owl:Class
+                                                                            ]
+                                                                          )
+                                                            ]
+                                                          ) ;
+                                       rdf:type owl:Class
+                                     ] .
+
+
+###  http://www.semanticweb.org/21402041/ontologies/2019/9/snowman-hoffmann#NotStackedSnow
+:NotStackedSnow rdf:type owl:Class ;
+                rdfs:subClassOf :CellSnow .
+
+
+###  http://www.semanticweb.org/21402041/ontologies/2019/9/snowman-hoffmann#PushableSnow
+:PushableSnow rdf:type owl:Class ;
+              owl:equivalentClass [ owl:intersectionOf ( :NotStackedSnow
+                                                         [ rdf:type owl:Class ;
+                                                           owl:unionOf ( [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                                                  owl:onProperty :hasEast ;
+                                                                                                  owl:someValuesFrom :Cell
+                                                                                                ]
+                                                                                                [ rdf:type owl:Restriction ;
+                                                                                                  owl:onProperty :hasWest ;
+                                                                                                  owl:someValuesFrom :CellPlayer
+                                                                                                ]
+                                                                                              ) ;
+                                                                           rdf:type owl:Class
+                                                                         ]
+                                                                         [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                                                  owl:onProperty :hasEast ;
+                                                                                                  owl:someValuesFrom :CellPlayer
+                                                                                                ]
+                                                                                                [ rdf:type owl:Restriction ;
+                                                                                                  owl:onProperty :hasWest ;
+                                                                                                  owl:someValuesFrom :Cell
+                                                                                                ]
+                                                                                              ) ;
+                                                                           rdf:type owl:Class
+                                                                         ]
+                                                                         [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                                                  owl:onProperty :hasNorth ;
+                                                                                                  owl:someValuesFrom :Cell
+                                                                                                ]
+                                                                                                [ rdf:type owl:Restriction ;
+                                                                                                  owl:onProperty :hasSouth ;
+                                                                                                  owl:someValuesFrom :CellPlayer
+                                                                                                ]
+                                                                                              ) ;
+                                                                           rdf:type owl:Class
+                                                                         ]
+                                                                         [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                                                                  owl:onProperty :hasNorth ;
+                                                                                                  owl:someValuesFrom :CellPlayer
+                                                                                                ]
+                                                                                                [ rdf:type owl:Restriction ;
+                                                                                                  owl:onProperty :hasSouth ;
+                                                                                                  owl:someValuesFrom :Cell
+                                                                                                ]
+                                                                                              ) ;
+                                                                           rdf:type owl:Class
+                                                                         ]
+                                                                       )
+                                                         ]
+                                                       ) ;
+                                    rdf:type owl:Class
+                                  ] .
+
+
+###  http://www.semanticweb.org/21402041/ontologies/2019/9/snowman-hoffmann#StackedSnow
+:StackedSnow rdf:type owl:Class ;
+             rdfs:subClassOf :CellSnow .
 
 
 #################################################################
@@ -371,7 +582,7 @@
 
 ###  http://www.semanticweb.org/21402041/ontologies/2019/9/snowman-hoffmann#cell22
 :cell22 rdf:type owl:NamedIndividual ,
-                 :Cell ;
+                 :LittleSnow ;
         :hasEast :cell23 ;
         :hasNorth :cell12 ;
         :hasSouth :cell32 ;
@@ -492,7 +703,7 @@
 
 ###  http://www.semanticweb.org/21402041/ontologies/2019/9/snowman-hoffmann#cell33
 :cell33 rdf:type owl:NamedIndividual ,
-                 :Cell ;
+                 :MediumSnow ;
         :hasEast :cell34 ;
         :hasNorth :cell23 ;
         :hasSouth :cell43 ;
@@ -613,7 +824,7 @@
 
 ###  http://www.semanticweb.org/21402041/ontologies/2019/9/snowman-hoffmann#cell44
 :cell44 rdf:type owl:NamedIndividual ,
-                 :Cell ;
+                 :BigSnow ;
         :hasEast :cell45 ;
         :hasNorth :cell34 ;
         :hasSouth :cell54 ;

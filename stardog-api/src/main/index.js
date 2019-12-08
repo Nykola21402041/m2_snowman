@@ -6,6 +6,8 @@ const snowman = require('../../../snowman');
 const Board = require('./domain/Board');
 const Player = require('./domain/player/Player');
 const SmallSnowball = require('./domain/snowball/SmallSnowball');
+const MediumSnowball = require('./domain/snowball/MediumSnowball');
+const BigSnowball = require('./domain/snowball/BigSnowball');
 
 const SnowmanDAO = require('./SnowmanDAO');
 
@@ -25,11 +27,15 @@ const schema = buildSchema(`
 const root = {
     getGame: async () => {
         let position = await snowmanDao.getPlayerPosition();
-        console.log(position);
         const player = new Player(position[0], position[1]);
-        //position = await snowmanDao.getLittleBoulePosition();
-        const smallSnowball = new SmallSnowball(1, 1);
-        board = new Board(snowman.game.size, player, smallSnowball);
+        position = await snowmanDao.getLittleSnow();
+        const smallSnowball = new SmallSnowball(position[0], position[1]);
+        position = await snowmanDao.getMediumSnow();
+        const mediumSnowball = new MediumSnowball(position[0], position[1]);
+        position = await snowmanDao.getBigSnow();
+        const bigSnowball = new BigSnowball(position[0], position[1]);
+
+        board = new Board(snowman.game.size, player, smallSnowball, mediumSnowball, bigSnowball);
         return board.toArray();
     },
     move: async (req) => {
@@ -54,7 +60,86 @@ const root = {
                     board.player.moveLeft();
                     break;
             }
+        } else {
+            if(await snowmanDao.canPush(req.direction)){
+                try {
+                    let type;
+                    let position;
+                    for (const snowType of SnowmanDAO.ALL_SNOW_CELL_TYPE) {
+                        type = snowType;
+                        position = await snowmanDao.tryToGetSnowInformation(req.direction, snowType);
+                        if (position[0] !== -1 && position[1] !== -1) {
+                            console.log(`Snow to push : ${type} at ${position[0]} ${position[1]}`);
+                            await snowmanDao.pushSnowOnFreeCell(position[0], position[1], snowType, req.direction);
+                            await snowmanDao.movePlayer(req.direction);
+                            switch (req.direction) {
+                                case SnowmanDAO.UP:
+                                    switch (type) {
+                                        case SnowmanDAO.CELL_TYPE_LITTLE_SNOW:
+                                            board.smallSnowball.moveUp();
+                                            break;
+                                        case SnowmanDAO.CELL_TYPE_MEDIUM_SNOW:
+                                            board.mediumSnowball.moveUp();
+                                            break;
+                                        case SnowmanDAO.CELL_TYPE_BIG_SNOW:
+                                            board.bigSnowball.moveUp();
+                                            break;
+                                    }
+                                    board.player.moveUp();
+                                    break;
+                                case SnowmanDAO.DOWN:
+                                    switch (type) {
+                                        case SnowmanDAO.CELL_TYPE_LITTLE_SNOW:
+                                            board.smallSnowball.moveDown();
+                                            break;
+                                        case SnowmanDAO.CELL_TYPE_MEDIUM_SNOW:
+                                            board.mediumSnowball.moveDown();
+                                            break;
+                                        case SnowmanDAO.CELL_TYPE_BIG_SNOW:
+                                            board.bigSnowball.moveDown();
+                                            break;
+                                    }
+                                    board.player.moveDown();
+                                    break;
+                                case SnowmanDAO.RIGHT:
+                                    switch (type) {
+                                        case SnowmanDAO.CELL_TYPE_LITTLE_SNOW:
+                                            board.smallSnowball.moveRight();
+                                            break;
+                                        case SnowmanDAO.CELL_TYPE_MEDIUM_SNOW:
+                                            board.mediumSnowball.moveRight();
+                                            break;
+                                        case SnowmanDAO.CELL_TYPE_BIG_SNOW:
+                                            board.bigSnowball.moveRight();
+                                            break;
+                                    }
+                                    board.player.moveRight();
+                                    break;
+                                case SnowmanDAO.LEFT:
+                                    switch (type) {
+                                        case SnowmanDAO.CELL_TYPE_LITTLE_SNOW:
+                                            board.smallSnowball.moveLeft();
+                                            break;
+                                        case SnowmanDAO.CELL_TYPE_MEDIUM_SNOW:
+                                            board.mediumSnowball.moveLeft();
+                                            break;
+                                        case SnowmanDAO.CELL_TYPE_BIG_SNOW:
+                                            board.bigSnowball.moveLeft();
+                                            break;
+                                    }
+                                    board.player.moveLeft();
+                                    break;
+                            }
+                            break;
+                        }
+                    }
 
+                } catch (e) {
+                    console.log(e)
+                }
+
+
+            }
         }
         return board.toArray();
     }

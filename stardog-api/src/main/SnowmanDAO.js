@@ -19,12 +19,32 @@ class SnowmanDAO {
         return "South";
     }
 
-    static get CELL_TYPE_PLAYER(){
+    static get CELL_TYPE_PLAYER() {
         return "CellPlayer";
     }
 
-    static get CELL_TYPE_FREE(){
+    static get CELL_TYPE_FREE() {
         return "Cell";
+    }
+
+    static get ALL_SNOW_CELL_TYPE() {
+        return [
+            SnowmanDAO.CELL_TYPE_LITTLE_SNOW,
+            SnowmanDAO.CELL_TYPE_MEDIUM_SNOW,
+            SnowmanDAO.CELL_TYPE_BIG_SNOW
+        ];
+    }
+
+    static get CELL_TYPE_LITTLE_SNOW() {
+        return "LittleSnow";
+    }
+
+    static get CELL_TYPE_MEDIUM_SNOW() {
+        return "MediumSnow";
+    }
+
+    static get CELL_TYPE_BIG_SNOW() {
+        return "BigSnow";
     }
 
     constructor() {
@@ -58,6 +78,40 @@ class SnowmanDAO {
         return [Number(x), Number(y)];
     }
 
+    async getLittleSnow() {
+        let response = await this.queryStardog('SELECT ?x ?y WHERE {' +
+            '?cell rdf:type :LittleSnow .' +
+            '?cell :x ?x .' +
+            '?cell :y ?y .' +
+            '}');
+        const x = response.body.results.bindings[0].x.value;
+        const y = response.body.results.bindings[0].y.value;
+        return [Number(x), Number(y)];
+    }
+
+    async getMediumSnow() {
+        let response = await this.queryStardog('SELECT ?x ?y WHERE {' +
+            '?cell rdf:type :MediumSnow .' +
+            '?cell :x ?x .' +
+            '?cell :y ?y .' +
+            '}');
+        const x = response.body.results.bindings[0].x.value;
+        const y = response.body.results.bindings[0].y.value;
+        return [Number(x), Number(y)];
+    }
+
+    async getBigSnow() {
+        let response = await this.queryStardog('SELECT ?x ?y WHERE {' +
+            '?cell rdf:type :BigSnow .' +
+            '?cell :x ?x .' +
+            '?cell :y ?y .' +
+            '}');
+        const x = response.body.results.bindings[0].x.value;
+        const y = response.body.results.bindings[0].y.value;
+        return [Number(x), Number(y)];
+    }
+
+
     queryStardog(queryString) {
         return query.execute(this.db, this.dbname, queryString,
             'application/sparql-results+json', {
@@ -72,9 +126,9 @@ class SnowmanDAO {
     }
 
     insertCell(x, y, type) {
-        const northItem = (x - 1 !== - 1) ? `cell${x - 1}${y}` : 'wall';
+        const northItem = (x - 1 !== -1) ? `cell${x - 1}${y}` : 'wall';
         const southItem = (x + 1 !== 10) ? `cell${x + 1}${y}` : 'wall';
-        const westItem = (y - 1 !== - 1) ? `cell${x}${y - 1}` : 'wall';
+        const westItem = (y - 1 !== -1) ? `cell${x}${y - 1}` : 'wall';
         const eastItem = (y + 1 !== 10) ? `cell${x}${y + 1}` : 'wall';
         const query = `INSERT DATA {
             :cell${x}${y} rdf:type :${type};
@@ -87,7 +141,7 @@ class SnowmanDAO {
         return this.queryStardog(query);
     }
 
-    deleteCell(x, y, type){
+    deleteCell(x, y, type) {
         const query = `DELETE WHERE {
             ?cell rdf:type :${type} ;
                 :x "${x}"^^xsd:int ;
@@ -97,7 +151,6 @@ class SnowmanDAO {
 
     async isCellFree(direction) {
         const response = await this.queryStardog('ASK WHERE {?cell rdf:type :CellFree' + direction + 'Player}');
-        console.log("canMove to " + direction + " " + response.body.boolean);
         return response.body.boolean;
     }
 
@@ -105,28 +158,69 @@ class SnowmanDAO {
         let playerPosition = await this.getPlayerPosition();
         let x = playerPosition[0];
         let y = playerPosition[1];
-        await this.deleteCell(x ,y, SnowmanDAO.CELL_TYPE_PLAYER);
-        await this.insertCell(x, y, SnowmanDAO.CELL_TYPE_FREE);
+        this.swapTypeOfCellsByDirection(x, y, SnowmanDAO.CELL_TYPE_PLAYER, direction, SnowmanDAO.CELL_TYPE_FREE);
+    }
+
+    async changeCellType(x, y, oldType, newType) {
+        await this.deleteCell(x, y, oldType);
+        await this.insertCell(x, y, newType);
+    }
+
+    async swapTypeOfTwoCellsByCoords(x, y, type, x2, y2, type2) {
+        await this.changeCellType(x, y, type, type2);
+        await this.changeCellType(x2, y2, type2, type);
+    }
+
+    async swapTypeOfCellsByDirection(x, y, type, direction, directionType) {
         switch (direction) {
             case SnowmanDAO.UP:
-                await this.deleteCell(x - 1, y, SnowmanDAO.CELL_TYPE_FREE);
-                await this.insertCell(x - 1, y, SnowmanDAO.CELL_TYPE_PLAYER);
+                await this.swapTypeOfTwoCellsByCoords(x, y, type, x - 1, y, directionType);
                 break;
             case SnowmanDAO.DOWN:
-                await this.deleteCell(x + 1, y, SnowmanDAO.CELL_TYPE_FREE);
-                await this.insertCell(x + 1, y, SnowmanDAO.CELL_TYPE_PLAYER);
+                await this.swapTypeOfTwoCellsByCoords(x, y, type, x + 1, y, directionType);
                 break;
             case SnowmanDAO.LEFT:
-                await this.deleteCell(x, y - 1, SnowmanDAO.CELL_TYPE_FREE);
-                await this.insertCell(x, y - 1, SnowmanDAO.CELL_TYPE_PLAYER);
+                await this.swapTypeOfTwoCellsByCoords(x, y, type, x, y - 1, directionType);
                 break;
             case SnowmanDAO.RIGHT:
-                await this.deleteCell(x, y + 1, SnowmanDAO.CELL_TYPE_FREE);
-                await this.insertCell(x, y + 1, SnowmanDAO.CELL_TYPE_PLAYER);
+                await this.swapTypeOfTwoCellsByCoords(x, y, type, x, y + 1, directionType);
                 break;
             default:
                 throw "Unexpected direction";
         }
+    }
+
+    async canPush(direction) {
+        const response = await this.queryStardog(`ASK
+        WHERE {
+            ?cellPlayer rdf:type :CellPlayer .
+            ?cellPlayer :has${direction} ?snow .
+            ?snow rdf:type :PushableSnow .
+        }`);
+        return response.body.boolean;
+    }
+
+    async tryToGetSnowInformation(direction, snowType) {
+        const response = await this.queryStardog(`
+        SELECT ?x ?y
+        WHERE {
+            ?cellPlayer rdf:type :CellPlayer .
+            ?cellPlayer :has${direction} ?snow .
+            ?snow rdf:type :${snowType} .
+            ?snow :x ?x .
+            ?snow :y ?y .
+        }`);
+        let x = -1;
+        let y = -1;
+        if (response.body.results.bindings[0]) {
+            x = response.body.results.bindings[0].x.value;
+            y = response.body.results.bindings[0].y.value;
+        }
+        return [Number(x), Number(y)];
+    }
+
+    async pushSnowOnFreeCell(x, y, type, direction) {
+        await this.swapTypeOfCellsByDirection(x, y, type, direction, SnowmanDAO.CELL_TYPE_FREE);
     }
 
 }
