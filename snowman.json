@@ -21,6 +21,22 @@
       "SNOWBALL_BIG": {
         "type": "snowball_big",
         "int": 4
+      },
+      "SNOWBALL_MEDIUM_SMALL": {
+        "type": "snowball_medium_small",
+        "int": 5
+      },
+      "SNOWBALL_BIG_SMALL": {
+        "type": "snowball_big_small",
+        "int": 6
+      },
+      "SNOWBALL_BIG_MEDIUM": {
+        "type": "snowball_big_medium",
+        "int": 7
+      },
+      "SNOWBALL_BIG_MEDIUM_SMALL": {
+        "type": "snowball_big_medium_small",
+        "int": 9
       }
     }
   }

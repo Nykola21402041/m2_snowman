@@ -20,6 +20,7 @@ class Position {
         this._y = value;
     }
 
+
     toString() {
         return `(x: ${this.x}, y: ${this.y})`;
     }
