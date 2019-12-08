@@ -20,7 +20,7 @@ class Player extends AbstractBoardItem {
         if (!Number.isInteger(x) || x >= snowman.game.size || x < 0) {
             throw `${this.constructor.getType()}  - set x : Parameter x is not a valid integer !`;
         } else {
-            this._x = x;
+            this.position.x = x;
         }
     }
 
@@ -29,7 +29,7 @@ class Player extends AbstractBoardItem {
         if (!Number.isInteger(y) || y >= snowman.game.size || y < 0) {
             throw `${this.constructor.getType()} - set y : Parameter x is not a valid integer !`;
         } else {
-            this._y = y;
+            this.position.y = y;
         }
     }
 }

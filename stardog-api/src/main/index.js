@@ -26,25 +26,20 @@ const schema = buildSchema(`
 // The root provides a resolver function for each API endpoint
 const root = {
     getGame: async () => {
-        let position = await snowmanDao.getPlayerPosition();
-        const player = new Player(position[0], position[1]);
-        position = await snowmanDao.getLittleSnow();
-        const smallSnowball = new SmallSnowball(position[0], position[1]);
-        position = await snowmanDao.getMediumSnow();
-        const mediumSnowball = new MediumSnowball(position[0], position[1]);
-        position = await snowmanDao.getBigSnow();
-        const bigSnowball = new BigSnowball(position[0], position[1]);
-
+        const player = new Player(await snowmanDao.getPlayerPosition());
+        const smallSnowball = new SmallSnowball(await snowmanDao.getLittleSnow());
+        const mediumSnowball = new MediumSnowball(await snowmanDao.getMediumSnow());
+        const bigSnowball = new BigSnowball(await snowmanDao.getBigSnow());
         board = new Board(snowman.game.size, player, smallSnowball, mediumSnowball, bigSnowball);
         return board.toArray();
     },
     move: async (req) => {
-        let directions = [SnowmanDAO.UP, SnowmanDAO.DOWN, SnowmanDAO.LEFT, SnowmanDAO.RIGHT];
-        if (directions.indexOf(req["direction"]) === -1){
+        if (SnowmanDAO.LIST_DIRECTION.indexOf(req["direction"]) === -1) {
             throw "Unexpected direction";
         }
-        console.log(req.direction);
+        console.log(`Action move with ${req.direction} as direction`);
         if (await snowmanDao.isCellFree(req.direction)) {
+            // If the cell is free then player can move in
             await snowmanDao.movePlayer(req.direction);
             switch (req.direction) {
                 case SnowmanDAO.UP:
@@ -61,84 +56,78 @@ const root = {
                     break;
             }
         } else {
-            if(await snowmanDao.canPush(req.direction)){
-                try {
-                    let type;
-                    let position;
-                    for (const snowType of SnowmanDAO.ALL_SNOW_CELL_TYPE) {
-                        type = snowType;
-                        position = await snowmanDao.tryToGetSnowInformation(req.direction, snowType);
-                        if (position[0] !== -1 && position[1] !== -1) {
-                            console.log(`Snow to push : ${type} at ${position[0]} ${position[1]}`);
-                            await snowmanDao.pushSnowOnFreeCell(position[0], position[1], snowType, req.direction);
-                            await snowmanDao.movePlayer(req.direction);
-                            switch (req.direction) {
-                                case SnowmanDAO.UP:
-                                    switch (type) {
-                                        case SnowmanDAO.CELL_TYPE_LITTLE_SNOW:
-                                            board.smallSnowball.moveUp();
-                                            break;
-                                        case SnowmanDAO.CELL_TYPE_MEDIUM_SNOW:
-                                            board.mediumSnowball.moveUp();
-                                            break;
-                                        case SnowmanDAO.CELL_TYPE_BIG_SNOW:
-                                            board.bigSnowball.moveUp();
-                                            break;
-                                    }
-                                    board.player.moveUp();
+            // Try to push the snow to move afterward
+            if (await snowmanDao.canPush(req.direction)) {
+                let neighbor = await snowmanDao.scanNeighbor(req.direction);
+                if (neighbor) {
+                    let type = neighbor.get("type");
+                    let position = neighbor.get("position");
+                    console.log(`Snow to push : ${type} at ${position}`);
+                    await snowmanDao.pushSnowOnFreeCell(position, type, req.direction);
+                    await snowmanDao.movePlayer(req.direction);
+                    switch (req.direction) {
+                        case SnowmanDAO.UP:
+                            switch (type) {
+                                case SnowmanDAO.CELL_TYPE_LITTLE_SNOW:
+                                    board.smallSnowball.moveUp();
                                     break;
-                                case SnowmanDAO.DOWN:
-                                    switch (type) {
-                                        case SnowmanDAO.CELL_TYPE_LITTLE_SNOW:
-                                            board.smallSnowball.moveDown();
-                                            break;
-                                        case SnowmanDAO.CELL_TYPE_MEDIUM_SNOW:
-                                            board.mediumSnowball.moveDown();
-                                            break;
-                                        case SnowmanDAO.CELL_TYPE_BIG_SNOW:
-                                            board.bigSnowball.moveDown();
-                                            break;
-                                    }
-                                    board.player.moveDown();
+                                case SnowmanDAO.CELL_TYPE_MEDIUM_SNOW:
+                                    board.mediumSnowball.moveUp();
                                     break;
-                                case SnowmanDAO.RIGHT:
-                                    switch (type) {
-                                        case SnowmanDAO.CELL_TYPE_LITTLE_SNOW:
-                                            board.smallSnowball.moveRight();
-                                            break;
-                                        case SnowmanDAO.CELL_TYPE_MEDIUM_SNOW:
-                                            board.mediumSnowball.moveRight();
-                                            break;
-                                        case SnowmanDAO.CELL_TYPE_BIG_SNOW:
-                                            board.bigSnowball.moveRight();
-                                            break;
-                                    }
-                                    board.player.moveRight();
-                                    break;
-                                case SnowmanDAO.LEFT:
-                                    switch (type) {
-                                        case SnowmanDAO.CELL_TYPE_LITTLE_SNOW:
-                                            board.smallSnowball.moveLeft();
-                                            break;
-                                        case SnowmanDAO.CELL_TYPE_MEDIUM_SNOW:
-                                            board.mediumSnowball.moveLeft();
-                                            break;
-                                        case SnowmanDAO.CELL_TYPE_BIG_SNOW:
-                                            board.bigSnowball.moveLeft();
-                                            break;
-                                    }
-                                    board.player.moveLeft();
+                                case SnowmanDAO.CELL_TYPE_BIG_SNOW:
+                                    board.bigSnowball.moveUp();
                                     break;
                             }
+                            board.player.moveUp();
                             break;
-                        }
+                        case SnowmanDAO.DOWN:
+                            switch (type) {
+                                case SnowmanDAO.CELL_TYPE_LITTLE_SNOW:
+                                    board.smallSnowball.moveDown();
+                                    break;
+                                case SnowmanDAO.CELL_TYPE_MEDIUM_SNOW:
+                                    board.mediumSnowball.moveDown();
+                                    break;
+                                case SnowmanDAO.CELL_TYPE_BIG_SNOW:
+                                    board.bigSnowball.moveDown();
+                                    break;
+                            }
+                            board.player.moveDown();
+                            break;
+                        case SnowmanDAO.RIGHT:
+                            switch (type) {
+                                case SnowmanDAO.CELL_TYPE_LITTLE_SNOW:
+                                    board.smallSnowball.moveRight();
+                                    break;
+                                case SnowmanDAO.CELL_TYPE_MEDIUM_SNOW:
+                                    board.mediumSnowball.moveRight();
+                                    break;
+                                case SnowmanDAO.CELL_TYPE_BIG_SNOW:
+                                    board.bigSnowball.moveRight();
+                                    break;
+                            }
+                            board.player.moveRight();
+                            break;
+                        case SnowmanDAO.LEFT:
+                            switch (type) {
+                                case SnowmanDAO.CELL_TYPE_LITTLE_SNOW:
+                                    board.smallSnowball.moveLeft();
+                                    break;
+                                case SnowmanDAO.CELL_TYPE_MEDIUM_SNOW:
+                                    board.mediumSnowball.moveLeft();
+                                    break;
+                                case SnowmanDAO.CELL_TYPE_BIG_SNOW:
+                                    board.bigSnowball.moveLeft();
+                                    break;
+                            }
+                            board.player.moveLeft();
+                            break;
                     }
-
-                } catch (e) {
-                    console.log(e)
                 }
 
-
+                // if we can't push maybe we can stack ?
+            } else if (await snowmanDao.canStack(req.direction)) {
+                console.log("We can stack some snow !");
             }
         }
         return board.toArray();

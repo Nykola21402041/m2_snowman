@@ -78,10 +78,10 @@ class Board {
         for(let i = 0; i < this.boardSize ; i++) {
             array[i] = new Array(this.boardSize).fill(snowman.game.boardItem.FREECELL.int);
         }
-        array[this.player.x][this.player.y] = snowman.game.boardItem.PLAYER.int;
-        array[this.smallSnowball.x][this.smallSnowball.y] = snowman.game.boardItem.SNOWBALL_SMALL.int;
-        array[this.mediumSnowball.x][this.mediumSnowball.y] = snowman.game.boardItem.SNOWBALL_MEDIUM.int;
-        array[this.bigSnowball.x][this.bigSnowball.y] = snowman.game.boardItem.SNOWBALL_BIG.int;
+        array[this.player.position.x][this.player.position.y] = snowman.game.boardItem.PLAYER.int;
+        array[this.smallSnowball.position.x][this.smallSnowball.position.y] = snowman.game.boardItem.SNOWBALL_SMALL.int;
+        array[this.mediumSnowball.position.x][this.mediumSnowball.position.y] = snowman.game.boardItem.SNOWBALL_MEDIUM.int;
+        array[this.bigSnowball.position.x][this.bigSnowball.position.y] = snowman.game.boardItem.SNOWBALL_BIG.int;
         return array;
     }
 }
