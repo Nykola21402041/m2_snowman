@@ -12,7 +12,6 @@
 
           <v-btn-toggle>
             <v-btn color="dark blue" to="/">Game</v-btn>
-            <v-btn color="dark blue" to="/about">About</v-btn>
           </v-btn-toggle>
         </v-app-bar>
 

@@ -1,5 +1,7 @@
 <template>
-    <div><span>{{ value }}</span></div>
+    <div>
+        <img v-if="value!==0" width="40px" height="40px" :src="imgsrc">
+    </div>
 </template>
 
 <script src="./lib/Cell.js"/>

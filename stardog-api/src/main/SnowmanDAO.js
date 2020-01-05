@@ -114,6 +114,29 @@ class SnowmanDAO {
         return null;
     }
 
+    async getAllBoardItem() {
+        let response = await this.queryStardog(`
+            SELECT ?type ?x ?y
+            WHERE {
+                ?cell rdf:type ?type .
+                ?cell :x ?x .
+                ?cell :y ?y .
+                FILTER (?type IN (:LittleSnow, :MediumSnow, :BigSnow, :MediumLittleSnow, :BigLittleSnow, :BigMediumSnow,
+                :BigMediumLittleSnow, :CellPlayer))
+            }`);
+       if (response.body.results.bindings){
+           return response.body.results.bindings;
+       }
+       return null;
+    }
+
+    async deleteAllBoardItem(){
+        let items = await this.getAllBoardItem();
+        items.forEach((item) => {
+            this.changeCellType(item.x.value, item.y.value, item.type.value.split("#")[1], SnowmanDAO.CELL_TYPE_FREE);
+        });
+    }
+
     queryStardog(queryString) {
         return query.execute(this.db, this.dbname, queryString,
             'application/sparql-results+json', {
@@ -215,39 +238,26 @@ class SnowmanDAO {
     }
 
     async stackSnow(position, type, position2, type2){
-        console.log("1");
         await this.deleteCell(position.x, position.y, type);
-        console.log("2");
         await this.insertCell(position.x, position.y, SnowmanDAO.CELL_TYPE_FREE);
-        console.log("3");
         await this.deleteCell(position2.x, position2.y, type2);
-        console.log("4");
         switch (type) {
             case SnowmanDAO.CELL_TYPE_SMALL_SNOW:
                 switch (type2) {
                     case SnowmanDAO.CELL_TYPE_MEDIUM_SNOW:
-                        console.log("5");
                         await this.insertCell(position2.x, position2.y, SnowmanDAO.CELL_TYPE_MEDIUM_SMALL_SNOW);
-                        console.log("6");
                         break;
                     case SnowmanDAO.CELL_TYPE_BIG_SNOW:
-                        console.log("7");
                         await this.insertCell(position2.x, position2.y, SnowmanDAO.CELL_TYPE_BIG_SMALL_SNOW);
-                        console.log("9");
                         break;
                     case SnowmanDAO.CELL_TYPE_BIG_MEDIUM_SNOW:
-                        console.log("10");
                         await this.insertCell(position2.x, position2.y, SnowmanDAO.CELL_TYPE_BIG_MEDIUM_SMALL_SNOW);
-                        console.log("11");
                         break;
                 }
                 break;
             case SnowmanDAO.CELL_TYPE_MEDIUM_SNOW:
-                console.log("12");
                 if (type2 === SnowmanDAO.CELL_TYPE_BIG_SNOW) {
-                    console.log("13");
                     await this.insertCell(position2.x, position2.y, SnowmanDAO.CELL_TYPE_BIG_MEDIUM_SNOW);
-                    console.log("14");
                 }
                 break;
             default:
@@ -299,6 +309,7 @@ class SnowmanDAO {
     async pushSnowOnFreeCell(position, type, direction) {
         await this.swapTypeOfCellsByDirection(position, type, direction, SnowmanDAO.CELL_TYPE_FREE);
     }
+
 
 }
 

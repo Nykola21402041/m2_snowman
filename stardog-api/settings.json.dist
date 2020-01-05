@@ -1,0 +1,8 @@
+{
+  "stardog": {
+    "user": "admin",
+    "password": "admin",
+    "endpoint": "http://localhost:5820",
+    "dbname": "snowman"
+  }
+}

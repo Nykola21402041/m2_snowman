@@ -14,7 +14,6 @@ const BigMediumSmallSnowball = require('./domain/snowball/BigMediumSmallSnowball
 const MediumSmallSnowball = require('./domain/snowball/MediumSmallSnowball');
 
 
-
 const SnowmanDAO = require('./SnowmanDAO');
 
 let snowmanDao = new SnowmanDAO();
@@ -25,6 +24,7 @@ let board = new Board(snowman.game.size);
 const schema = buildSchema(`
   type Query {
     getGame: [[Int]],
+    newGame: [[Int]],
     move(direction:String!): [[Int]]
   }
 `);
@@ -71,6 +71,23 @@ const root = {
         }
         board = new Board(snowman.game.size, player, smallSnowball, mediumSnowball, bigSnowball, mediumSmallSnowball,
             bigMediumSnowball, bigSmallSnowball, bigMediumSmallSnowball);
+        return board.toArray();
+    },
+    newGame: async () => {
+        await snowmanDao.deleteAllBoardItem();
+        board = new Board(snowman.game.size);
+        let position = board.getRandomFreePosition(board.listNotFreePosition);
+        board.add(snowman.game.boardItem.PLAYER.type, position);
+        await snowmanDao.changeCellType(position.x, position.y, SnowmanDAO.CELL_TYPE_FREE, SnowmanDAO.CELL_TYPE_PLAYER);
+        position = board.getRandomFreePosition(board.listNotFreePosition);
+        board.add(snowman.game.boardItem.SNOWBALL_SMALL.type, position);
+        await snowmanDao.changeCellType(position.x, position.y, SnowmanDAO.CELL_TYPE_FREE, SnowmanDAO.CELL_TYPE_SMALL_SNOW);
+        position = board.getRandomFreePosition(board.listNotFreePosition);
+        board.add(snowman.game.boardItem.SNOWBALL_MEDIUM.type, position);
+        await snowmanDao.changeCellType(position.x, position.y, SnowmanDAO.CELL_TYPE_FREE, SnowmanDAO.CELL_TYPE_MEDIUM_SNOW);
+        position = board.getRandomFreePosition(board.listNotFreePosition);
+        board.add(snowman.game.boardItem.SNOWBALL_BIG.type, position);
+        await snowmanDao.changeCellType(position.x, position.y, SnowmanDAO.CELL_TYPE_FREE, SnowmanDAO.CELL_TYPE_BIG_SNOW);
         return board.toArray();
     },
     move: async (req) => {
